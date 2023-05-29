@@ -1,22 +1,12 @@
-import {type PayloadAction, type Action} from '@reduxjs/toolkit';
-
-type Todos = {
-	id: number;
-	text: string;
-	completed: boolean;
-	color?: string;
-};
+import {type PayloadAction, type AnyAction} from '@reduxjs/toolkit';
+import type Todos from '../../types/todo';
 
 type InitialState = {
 	todos: Todos[];
 };
 
 const initialState: InitialState = {
-	todos: [
-		{id: 0, text: 'Learn React', completed: true},
-		{id: 1, text: 'Learn Redux', completed: false, color: 'purple'},
-		{id: 2, text: 'Build something fun!', completed: false, color: 'blue'},
-	],
+	todos: [],
 };
 
 function nextTodoId(todos: Todos[]) {
@@ -25,9 +15,9 @@ function nextTodoId(todos: Todos[]) {
 }
 
 // eslint-disable-next-line @typescript-eslint/default-param-last
-export default function todosReducer(state: InitialState = initialState, action: PayloadAction<number>) {
+export default function todosReducer(state = initialState, action: PayloadAction) {
 	switch (action.type) {
-		case 'todo/todoAdded':
+		case 'todos/todoAdded':
 			return {
 				...state,
 				todos: [
@@ -39,7 +29,7 @@ export default function todosReducer(state: InitialState = initialState, action:
 					},
 				],
 			};
-		case 'todo/todoToggled':
+		case 'todos/todoToggled':
 			return {
 				...state,
 				todos: state.todos.map(todo => {
